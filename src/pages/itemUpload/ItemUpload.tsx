@@ -23,6 +23,19 @@ const ItemUpload: NextPage = () => {
           <input type="file" className="hidden" />
         </label>
       </div>
+      <div className="mb-4">
+        <label htmlFor="name" className="text-sm font-medium text-gray-700">
+          Name
+        </label>
+        <div className="relative flex items-center mt-2">
+          <input
+            id="name"
+            type="text"
+            placeholder="Name"
+            className="px-3 flex-1 border-gray-400 rounded-md focus:outline-none focus:border-orange-500 focus:ring-orange-500"
+          />
+        </div>
+      </div>
       <div>
         <label htmlFor="price" className="text-sm font-medium text-gray-700">
           Price
