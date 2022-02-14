@@ -1,12 +1,12 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { cls } from "src/lib/utils";
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { cls } from 'src/lib/utils'
 
 interface LayoutProps {
-  title?: string;
-  canGoBack?: boolean;
-  hasTapBar?: boolean;
-  children: React.ReactNode;
+  title?: string
+  canGoBack?: boolean
+  hasTapBar?: boolean
+  children: React.ReactNode
 }
 
 export default function Layout({
@@ -15,10 +15,10 @@ export default function Layout({
   hasTapBar,
   children,
 }: LayoutProps) {
-  const router = useRouter();
+  const router = useRouter()
   const onClick = () => {
-    router.back();
-  };
+    router.back()
+  }
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -43,9 +43,7 @@ export default function Layout({
         )}
         {title && <span>{title}</span>}
       </div>
-      <div className={cls("pt-[70px]", hasTapBar ? "pb-24" : "")}>
-        {children}
-      </div>
+      <div className={cls('pt-14', hasTapBar ? 'pb-24' : '')}>{children}</div>
       {hasTapBar && (
         <nav className="py-2.5 px-3 border-t fixed max-w-2xl bottom-0 w-full bg-white flex items-center justify-around">
           <Link href="/">
@@ -124,7 +122,7 @@ export default function Layout({
               <span className="text-xs">라이브</span>
             </a>
           </Link>
-          <Link href="/profile">
+          <Link href="/myInfo">
             <a className="flex items-center flex-col font-semibold text-gray-900 space-y-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -146,5 +144,5 @@ export default function Layout({
         </nav>
       )}
     </div>
-  );
+  )
 }

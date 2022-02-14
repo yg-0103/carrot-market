@@ -1,5 +1,6 @@
-import Layout from "@components/Layout";
-import type { NextPage } from "next";
+import Button from '@components/Button'
+import Layout from '@components/Layout'
+import type { NextPage } from 'next'
 
 const CommunityDetail: NextPage = () => {
   return (
@@ -79,13 +80,13 @@ const CommunityDetail: NextPage = () => {
             rows={4}
             placeholder="Answer this question!"
           />
-          <button className="mt-2 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none ">
-            Reply
-          </button>
+          <div className="mt-5">
+            <Button onClick={() => {}}>Reply</Button>
+          </div>
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default CommunityDetail;
+export default CommunityDetail

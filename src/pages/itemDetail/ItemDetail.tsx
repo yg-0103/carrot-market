@@ -1,5 +1,6 @@
-import Layout from "@components/Layout";
-import type { NextPage } from "next";
+import Button from '@components/Button'
+import Layout from '@components/Layout'
+import type { NextPage } from 'next'
 
 const ItemDetail: NextPage = () => {
   return (
@@ -29,10 +30,8 @@ const ItemDetail: NextPage = () => {
               in there, and that ni**a Winston or anybody else is in there, you
               the first motherfucker to get shot. You understand?
             </p>
-            <div className="flex space-x-2 mt-5">
-              <button className="p-2 bg-orange-500 flex-1 rounded-md text-gray-100 font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 hover:bg-orange-600">
-                Talk to seller
-              </button>
+            <div className="flex items-center space-x-2 mt-5">
+              <Button onClick={() => {}}>Talk to seller</Button>
               <button className="p-3 flex items-center justify-center text-gray-400 hover:bg-slate-200 rounded-md transition">
                 <svg
                   className="h-6 w-6 "
@@ -69,7 +68,7 @@ const ItemDetail: NextPage = () => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default ItemDetail;
+export default ItemDetail

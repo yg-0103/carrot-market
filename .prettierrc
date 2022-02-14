@@ -1,0 +1,19 @@
+{
+  "singleQuote": true,
+  "semi": false,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "importOrder": [
+    "^@(store|modules)/(.*)$",
+    "^@(contexts|hoc)/(.*)$",
+    "^@hooks/(.*)$",
+    "^@constants/?(.*)$",
+    "^@pages/(.*)$",
+    "^@modals/(.*)$",
+    "^@(components|icons)/(.*)$",
+    "^@utils/(.*)$",
+    "^@styles/(.*)$",
+    "^[./]"
+  ]
+}

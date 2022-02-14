@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { cls } from "src/lib/utils";
+import Button from '@components/Button'
+import { useState } from 'react'
+import { cls } from 'src/lib/utils'
 
 export default function Enter() {
-  const [method, setMethod] = useState<"email" | "phone">("email");
-  const onEmailClick = () => setMethod("email");
-  const onPhoneClick = () => setMethod("phone");
+  const [method, setMethod] = useState<'email' | 'phone'>('email')
+  const onEmailClick = () => setMethod('email')
+  const onPhoneClick = () => setMethod('phone')
   return (
     <div className="mt-16 px-4">
       <h3 className="text-center font-bold text-3xl">Enter to Carrot</h3>
@@ -14,10 +15,10 @@ export default function Enter() {
           <div className="mt-10 grid grid-cols-2 w-full gap-10 border-b">
             <button
               className={cls(
-                "pb-4 border-b-2 font-medium transition duration-250",
-                method === "email"
-                  ? "border-orange-500 text-orange-500"
-                  : "border-b-transparent text-gray-500"
+                'pb-4 border-b-2 font-medium transition duration-250',
+                method === 'email'
+                  ? 'border-orange-500 text-orange-500'
+                  : 'border-b-transparent text-gray-500'
               )}
               onClick={onEmailClick}
             >
@@ -25,10 +26,10 @@ export default function Enter() {
             </button>
             <button
               className={cls(
-                "pb-4 border-b-2 font-medium transition duration-250",
-                method === "phone"
-                  ? "border-orange-500 text-orange-500"
-                  : "border-b-transparent text-gray-500"
+                'pb-4 border-b-2 font-medium transition duration-250',
+                method === 'phone'
+                  ? 'border-orange-500 text-orange-500'
+                  : 'border-b-transparent text-gray-500'
               )}
               onClick={onPhoneClick}
             >
@@ -38,11 +39,11 @@ export default function Enter() {
         </div>
         <form className="flex flex-col mt-8">
           <label htmlFor="email" className="text-sm font-medium text-gray-700">
-            {method === "email" ? "Email address" : null}
-            {method === "phone" ? "Phone number" : null}
+            {method === 'email' ? 'Email address' : null}
+            {method === 'phone' ? 'Phone number' : null}
           </label>
           <div className="mt-2">
-            {method === "email" ? (
+            {method === 'email' ? (
               <input
                 id="email"
                 type="email"
@@ -50,7 +51,7 @@ export default function Enter() {
                 className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
               />
             ) : null}
-            {method === "phone" ? (
+            {method === 'phone' ? (
               <div className="flex shadow-sm">
                 <span className="flex items-center justify-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 select-none text-sm">
                   +82
@@ -63,10 +64,12 @@ export default function Enter() {
               </div>
             ) : null}
           </div>
-          <button className="mt-5 bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none">
-            {method === "email" ? "Get login link" : null}
-            {method === "phone" ? "Get one-time password" : null}
-          </button>
+          <div className="mt-5">
+            <Button onClick={() => {}}>
+              {method === 'email' ? 'Get login link' : null}
+              {method === 'phone' ? 'Get one-time password' : null}
+            </Button>
+          </div>
         </form>
         <div className="mt-8">
           <div className="relative">
@@ -106,5 +109,5 @@ export default function Enter() {
         </div>
       </div>
     </div>
-  );
+  )
 }
