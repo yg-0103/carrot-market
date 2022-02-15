@@ -6,7 +6,7 @@ import Link from 'next/link'
 const MyInfo: NextPage = () => {
   return (
     <Layout title="나의 캐럿" hasTapBar>
-      <div className="px-4">
+      <div className="px-4 py-3">
         <Profile name="Steve Jeps">
           <Link href="/myInfo/edit">
             <a>Edit Profile &rarr;</a>

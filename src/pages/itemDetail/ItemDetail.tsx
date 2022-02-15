@@ -1,6 +1,8 @@
 import Button from '@components/Button'
 import Layout from '@components/Layout'
+import Profile from '@components/Profile'
 import type { NextPage } from 'next'
+import Link from 'next/link'
 
 const ItemDetail: NextPage = () => {
   return (
@@ -8,16 +10,12 @@ const ItemDetail: NextPage = () => {
       <div className="px-4 py-10">
         <div>
           <div className="h-64 bg-slate-300 mb-3" />
-          <div className="flex space-x-3 items-center border-b pb-3 cursor-pointer">
-            <div className="h-14 w-14 rounded-full bg-slate-300" />
-            <div>
-              <p className="font-semibold text-gray-700 text-sm">Steve Jebs</p>
-              <p className="text-gray-500 text-xs font-medium">
-                View profile &rarr;
-              </p>
-            </div>
-          </div>
-          <div className="mt-5">
+          <Profile name="Steve Jeps">
+            <Link href="/myInfo/edit">
+              <a>View Profile &rarr;</a>
+            </Link>
+          </Profile>
+          <div className="mt-5 border-t pt-4">
             <h1 className="font-bold text-3xl text-gray-900">Galaxy S50</h1>
             <p className="mt-3 mb-5 font-medium text-xl text-gray-800">$140</p>
             <p className="text-sm text-gray-800">

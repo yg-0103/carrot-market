@@ -1,4 +1,5 @@
 import Button from '@components/Button'
+import Input from '@components/Input'
 import Layout from '@components/Layout'
 import type { NextPage } from 'next'
 
@@ -27,36 +28,10 @@ const ItemUpload: NextPage = () => {
           </label>
         </div>
         <div className="mb-4">
-          <label htmlFor="name" className="text-sm font-medium text-gray-700">
-            Name
-          </label>
-          <div className="relative flex items-center mt-2">
-            <input
-              id="name"
-              type="text"
-              placeholder="Name"
-              className="px-3 flex-1 border-gray-400 rounded-md focus:outline-none focus:border-orange-500 focus:ring-orange-500"
-            />
-          </div>
+          <Input label="Name" type="text" />
         </div>
         <div>
-          <label htmlFor="price" className="text-sm font-medium text-gray-700">
-            Price
-          </label>
-          <div className="relative flex items-center mt-2">
-            <div className="absolute left-3">
-              <span className="text-md text-gray-500">$</span>
-            </div>
-            <input
-              id="price"
-              type="text"
-              placeholder="0.00"
-              className="px-7 flex-1 border-gray-400 rounded-md focus:outline-none focus:border-orange-500 focus:ring-orange-500"
-            />
-            <div className="absolute right-3">
-              <span className="text-gray-500">USD</span>
-            </div>
-          </div>
+          <Input.Price label="Price" />
         </div>
         <div className="mt-5">
           <label

@@ -1,3 +1,5 @@
+import Tags from '@components/Tags'
+
 interface Props {
   tags: string[]
   question: string
@@ -17,16 +19,7 @@ const CommunityItem = ({
 }: Props) => {
   return (
     <div className="cursor-pointer py-3">
-      <div className="space-x-2">
-        {tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-gray-900 bg-gray-200 px-1.5 py-1 text-sm rounded-xl"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
+      <Tags tags={tags} />
 
       <div className="mt-3 text-gray-800">
         <span className="text-orange-500">Q.</span> {question}
