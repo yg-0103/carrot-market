@@ -1,12 +1,29 @@
 import Button from '@components/Button'
 import Input from '@components/Input'
 import { useState } from 'react'
-import { cls } from 'src/lib/utils'
+import { useForm } from 'react-hook-form'
+import { cls } from 'src/lib/client/utils'
+
+interface EnterForm {
+  email?: string
+  phone?: number
+}
 
 export default function Enter() {
   const [method, setMethod] = useState<'email' | 'phone'>('email')
-  const onEmailClick = () => setMethod('email')
-  const onPhoneClick = () => setMethod('phone')
+  const { register, reset, handleSubmit } = useForm<EnterForm>()
+  const onEmailClick = () => {
+    reset()
+    setMethod('email')
+  }
+  const onPhoneClick = () => {
+    reset()
+    setMethod('phone')
+  }
+
+  const onValid = (data: EnterForm) => {
+    console.log(data)
+  }
   return (
     <div className="mt-16 px-4">
       <h3 className="text-center font-bold text-3xl">Enter to Carrot</h3>
@@ -38,9 +55,21 @@ export default function Enter() {
             </button>
           </div>
         </div>
-        <form className="flex flex-col mt-8">
-          {method === 'email' && <Input label="Email address" />}
-          {method === 'phone' && <Input.Phone label="Phone number" />}
+        <form onSubmit={handleSubmit(onValid)} className="flex flex-col mt-8">
+          {method === 'email' && (
+            <Input
+              label="Email address"
+              register={register('email', { required: 'Email is required' })}
+            />
+          )}
+          {method === 'phone' && (
+            <Input.Phone
+              label="Phone number"
+              register={register('phone', {
+                required: 'Phone number is required',
+              })}
+            />
+          )}
           <div className="mt-5">
             <Button onClick={() => {}}>
               {method === 'email' && 'Get login link'}

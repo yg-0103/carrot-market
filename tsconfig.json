@@ -3,17 +3,11 @@
     "baseUrl": "./",
     "paths": {
       "@components/*": ["src/components/*"],
-      "@constants/*": ["src/constants/*"],
-      "@contexts/*": ["src/contexts/*"],
-      "@hoc/*": ["src/hoc/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@icons/*": ["src/icons/*"],
-      "@modals/*": ["src/modals/*"],
       "@pages/*": ["src/pages/*"],
-      "@store/*": ["src/store/*"],
       "@modules/*": ["src/store/modules/*"],
       "@styles/*": ["src/styles/*"],
-      "@utils/*": ["src/utils/*"]
+      "@lib/*": ["src/lib/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
