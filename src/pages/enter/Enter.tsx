@@ -1,5 +1,7 @@
 import Button from '@components/Button'
 import Input from '@components/Input'
+import useFetch from '@hooks/useFetch'
+import enter from '@lib/client/ajax'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { cls } from 'src/lib/client/utils'
@@ -11,6 +13,7 @@ interface EnterForm {
 
 export default function Enter() {
   const [method, setMethod] = useState<'email' | 'phone'>('email')
+  const [fetch, { loading, data, error }] = useFetch({ fetcher: enter })
   const { register, reset, handleSubmit } = useForm<EnterForm>()
   const onEmailClick = () => {
     reset()
@@ -22,8 +25,9 @@ export default function Enter() {
   }
 
   const onValid = (data: EnterForm) => {
-    console.log(data)
+    fetch(data)
   }
+
   return (
     <div className="mt-16 px-4">
       <h3 className="text-center font-bold text-3xl">Enter to Carrot</h3>
