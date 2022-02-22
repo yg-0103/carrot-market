@@ -25,6 +25,7 @@ export default function Enter() {
   }
 
   const onValid = (data: EnterForm) => {
+    if (loading) return
     fetch(data)
   }
 
@@ -76,8 +77,9 @@ export default function Enter() {
           )}
           <div className="mt-5">
             <Button onClick={() => {}}>
-              {method === 'email' && 'Get login link'}
-              {method === 'phone' && 'Get one-time password'}
+              {method === 'email' && (loading ? 'Loading' : 'Get login link')}
+              {method === 'phone' &&
+                (loading ? 'Loading' : 'Get one-time password')}
             </Button>
           </div>
         </form>
