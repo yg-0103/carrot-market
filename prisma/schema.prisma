@@ -20,7 +20,7 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
   name String
-  phone Int? @unique
+  phone BigInt? @unique
   email String? @unique
   avatar String?
   createdAt DateTime @default(now())
@@ -28,11 +28,13 @@ model User {
   tokens Token[]
 }
 
+
+
 model Token {
   id Int @id @default(autoincrement())
   payload String @unique
   userId Int
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade) // Cascade User가 삭제되면 Token도 같이 삭제
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
 }

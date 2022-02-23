@@ -11,7 +11,7 @@ interface MutationState<T> {
   error: any
 }
 
-export default function useMutation<T>({ fetcher }: Props) {
+export default function useFetch<T>({ fetcher }: Props) {
   const [state, setState] = useState<MutationState<T>>({
     loading: false,
     data: null,
