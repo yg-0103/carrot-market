@@ -2,7 +2,8 @@ import Button from '@components/Button'
 import Input from '@components/Input'
 import useFetch from '@hooks/useFetch'
 import { enter, confirm } from '@lib/client/api'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { cls } from 'src/lib/client/utils'
 
@@ -17,6 +18,7 @@ interface TokenForm {
 
 export default function Enter() {
   const [method, setMethod] = useState<'email' | 'phone'>('email')
+  const router = useRouter()
   const [login, { loading, data }] = useFetch<{ ok: boolean }>({
     fetcher: enter,
   })
@@ -52,6 +54,11 @@ export default function Enter() {
     tokenCheck(data)
   }
 
+  useEffect(() => {
+    if (tokenData?.ok) {
+      router.push('/')
+    }
+  }, [tokenData, router])
   return (
     <div className="mt-16 px-4">
       <h3 className="text-center font-bold text-3xl">Enter to Carrot</h3>
