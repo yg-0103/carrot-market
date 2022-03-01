@@ -1,9 +1,14 @@
 import FloatingButton from '@components/FloatingButton'
 import Layout from '@components/Layout'
 import ProductItem from '@components/ProductItem'
+import useUser from '@hooks/useUser'
 import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
+  const { user, isLoading } = useUser()
+
+  console.log(user, isLoading)
+
   return (
     <Layout title="홈" hasTapBar>
       <div className="divide-y-2">
