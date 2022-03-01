@@ -3,10 +3,11 @@ import Layout from '@components/Layout'
 import ProductItem from '@components/ProductItem'
 import useUser from '@hooks/useUser'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
   const { user, isLoading } = useUser()
-
+  const router = useRouter()
   console.log(user, isLoading)
 
   return (
@@ -16,13 +17,14 @@ const Home: NextPage = () => {
           <ProductItem
             key={i}
             productName="New iPhone 14"
+            id={i}
             price={95}
             desc="Black"
             likeCount={1}
             commentCount={1}
           />
         ))}
-        <FloatingButton onClick={() => {}}>
+        <FloatingButton onClick={() => router.push('/products/upload')}>
           <svg
             className="h-6 w-6"
             xmlns="http://www.w3.org/2000/svg"

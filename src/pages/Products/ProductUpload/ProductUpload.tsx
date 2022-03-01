@@ -3,7 +3,7 @@ import Input from '@components/Input'
 import Layout from '@components/Layout'
 import type { NextPage } from 'next'
 
-const ItemUpload: NextPage = () => {
+const ProductUpload: NextPage = () => {
   return (
     <Layout title="상품 등록" canGoBack>
       <div className="px-4 py-16">
@@ -56,4 +56,4 @@ const ItemUpload: NextPage = () => {
   )
 }
 
-export default ItemUpload
+export default ProductUpload

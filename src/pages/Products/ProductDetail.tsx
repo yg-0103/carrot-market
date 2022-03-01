@@ -4,7 +4,7 @@ import Profile from '@components/Profile'
 import type { NextPage } from 'next'
 import Link from 'next/link'
 
-const ItemDetail: NextPage = () => {
+const ProductDetail: NextPage = () => {
   return (
     <Layout title="상품 정보" canGoBack>
       <div className="px-4 py-10">
@@ -69,4 +69,4 @@ const ItemDetail: NextPage = () => {
   )
 }
 
-export default ItemDetail
+export default ProductDetail

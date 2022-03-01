@@ -4,7 +4,7 @@ interface Props {
   label: string
   placeholder?: string
   type?: string
-  register: UseFormRegisterReturn
+  register?: UseFormRegisterReturn
 }
 
 const Input = ({ label, placeholder, register, type = 'email' }: Props) => {

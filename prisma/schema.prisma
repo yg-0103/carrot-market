@@ -26,6 +26,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   tokens Token[]
+  products Product[]
 }
 
 
@@ -34,7 +35,19 @@ model Token {
   id Int @id @default(autoincrement())
   payload String @unique
   userId Int
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade) // Cascade User가 삭제되면 Token도 같이 삭제
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade) // Cascade: User가 삭제되면 Token도 같이 삭제
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade) // Cascade: User가 삭제되면 Token도 같이 삭제
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+  name String
+  image String
+  price Int
+  description String @db.MediumText
 }
