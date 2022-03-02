@@ -1,12 +1,44 @@
 import Button from '@components/Button'
 import Input from '@components/Input'
 import Layout from '@components/Layout'
+import TextArea from '@components/TextArea/TextArea'
+import useMutation from '@hooks/useMutation'
+import { Product } from '@prisma/client'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+
+interface UploadProductForm {
+  name: string
+  price: number
+  description: string
+}
+
+interface UploadMutation {
+  ok: boolean
+  product: Product
+}
 
 const ProductUpload: NextPage = () => {
+  const { register, handleSubmit } = useForm<UploadProductForm>()
+  const [uploadProduct, { loading, data }] =
+    useMutation<UploadMutation>('/api/products')
+  const router = useRouter()
+  const onValid = (data: UploadProductForm) => {
+    console.log(data)
+    uploadProduct(data)
+  }
+
+  useEffect(() => {
+    if (data && data?.ok) {
+      router.push(`/products/${data.product.id}`)
+    }
+  }, [data, router])
+
   return (
     <Layout title="상품 등록" canGoBack>
-      <div className="px-4 py-16">
+      <form className="px-4 py-16" onSubmit={handleSubmit(onValid)}>
         <div className="mb-5">
           <label className="flex items-center text-gray-500 justify-center h-48 border-gray-400 border-2 border-dashed rounded-md hover:text-orange-500 hover:border-orange-500 transition">
             <svg
@@ -28,30 +60,30 @@ const ProductUpload: NextPage = () => {
           </label>
         </div>
         <div className="mb-4">
-          <Input label="Name" type="text" />
+          <Input
+            label="Name"
+            type="text"
+            register={register('name', { required: 'Name is required' })}
+          />
         </div>
         <div>
-          <Input.Price label="Price" />
+          <Input.Price
+            label="Price"
+            register={register('price', { required: 'Price is required' })}
+          />
         </div>
         <div className="mt-5">
-          <label
-            htmlFor="description"
-            className="text-sm font-medium text-gray-700"
-          >
-            Description
-          </label>
-          <div className="mt-2">
-            <textarea
-              id="description"
-              rows={4}
-              className="px-3 py-2 w-full border-gray-400 rounded-md focus:outline-none focus:border-orange-500 focus:ring-orange-500"
-            />
-          </div>
+          <TextArea
+            label="Description"
+            register={register('description', {
+              required: 'Description is required',
+            })}
+          />
         </div>
         <div className="mt-5">
-          <Button onClick={() => {}}>Upload product</Button>
+          <Button loading={loading}>Upload product</Button>
         </div>
-      </div>
+      </form>
     </Layout>
   )
 }

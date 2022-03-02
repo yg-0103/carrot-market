@@ -1,7 +1,6 @@
 import Button from '@components/Button'
 import Input from '@components/Input'
-import useFetch from '@hooks/useFetch'
-import { enter, confirm } from '@lib/client/api'
+import useMutation from '@hooks/useMutation'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -19,15 +18,12 @@ interface TokenForm {
 export default function Enter() {
   const [method, setMethod] = useState<'email' | 'phone'>('email')
   const router = useRouter()
-  const [login, { loading, data }] = useFetch<{ ok: boolean }>({
-    fetcher: enter,
-  })
+  const [login, { loading, data }] =
+    useMutation<{ ok: boolean }>('/api/users/enter')
 
-  const [tokenCheck, { loading: tokenLoading, data: tokenData }] = useFetch<{
+  const [tokenCheck, { loading: tokenLoading, data: tokenData }] = useMutation<{
     ok: boolean
-  }>({
-    fetcher: confirm,
-  })
+  }>('/api/users/confirm')
 
   const { register, reset, handleSubmit } = useForm<EnterForm>()
 
@@ -77,9 +73,7 @@ export default function Enter() {
             />
 
             <div className="mt-5">
-              <Button onClick={() => {}}>
-                {tokenLoading ? 'Loading' : 'Confirm Token'}
-              </Button>
+              <Button loading={tokenLoading}>Confirm Token</Button>
             </div>
           </form>
         ) : (
@@ -134,11 +128,9 @@ export default function Enter() {
                 />
               )}
               <div className="mt-5">
-                <Button onClick={() => {}}>
-                  {method === 'email' &&
-                    (loading ? 'Loading' : 'Get login link')}
-                  {method === 'phone' &&
-                    (loading ? 'Loading' : 'Get one-time password')}
+                <Button loading={loading}>
+                  {method === 'email' && 'Get login link'}
+                  {method === 'phone' && 'Get one-time password'}
                 </Button>
               </div>
             </form>

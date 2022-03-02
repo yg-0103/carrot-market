@@ -12,7 +12,7 @@ const Write: NextPage = () => {
           placeholder="Ask a question!"
         />
         <div className="mt-2">
-          <Button onClick={() => {}}>Submit</Button>
+          <Button>Submit</Button>
         </div>
       </form>
     </Layout>

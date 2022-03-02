@@ -58,7 +58,7 @@ const AddStream: NextPage = () => {
           />
         </div>
         <div className="mt-5">
-          <Button onClick={() => {}}>Go live</Button>
+          <Button>Go live</Button>
         </div>
       </div>
     </Layout>

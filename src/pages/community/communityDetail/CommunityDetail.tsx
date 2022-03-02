@@ -79,7 +79,7 @@ const CommunityDetail: NextPage = () => {
             placeholder="Answer this question!"
           />
           <div className="mt-5">
-            <Button onClick={() => {}}>Reply</Button>
+            <Button>Reply</Button>
           </div>
         </div>
       </div>

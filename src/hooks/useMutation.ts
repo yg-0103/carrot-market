@@ -1,9 +1,5 @@
-import { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { useState } from 'react'
-
-interface Props {
-  fetcher: <T>(...args: any) => Promise<AxiosResponse<T, any>>
-}
 
 interface MutationState<T> {
   loading: boolean
@@ -11,18 +7,18 @@ interface MutationState<T> {
   error: any
 }
 
-export default function useFetch<T>({ fetcher }: Props) {
+export default function useMutation<T>(url: string) {
   const [state, setState] = useState<MutationState<T>>({
     loading: false,
     data: null,
     error: null,
   })
 
-  const fetch = async (...args: any) => {
+  const mutation = async (...args: any) => {
     setState({ ...state, loading: true })
 
     try {
-      const { data } = await fetcher<T>(...args)
+      const { data } = await axios.post<T>(url, ...args)
 
       setState({ ...state, loading: false, data })
     } catch (error) {
@@ -33,5 +29,5 @@ export default function useFetch<T>({ fetcher }: Props) {
       })
     }
   }
-  return [fetch, state] as const
+  return [mutation, state] as const
 }
