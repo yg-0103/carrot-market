@@ -33,4 +33,4 @@ async function handler(
   })
 }
 
-export default withSession(withHandler({ method: 'POST', handler }))
+export default withSession(withHandler({ methods: ['POST'], handler }))

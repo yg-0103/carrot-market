@@ -1,25 +1,27 @@
 import FloatingButton from '@components/FloatingButton'
 import Layout from '@components/Layout'
 import ProductItem from '@components/ProductItem'
+import useProducts from '@hooks/useProducts'
 import useUser from '@hooks/useUser'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
   const { user, isLoading } = useUser()
+  const { products } = useProducts()
   const router = useRouter()
-  console.log(user, isLoading)
 
+  console.log(products)
   return (
     <Layout title="홈" hasTapBar>
       <div className="divide-y-2">
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
+        {products?.map(({ id, name, price, description }) => (
           <ProductItem
-            key={i}
-            productName="New iPhone 14"
-            id={i}
-            price={95}
-            desc="Black"
+            key={id}
+            productName={name}
+            id={id}
+            price={price}
+            desc={description}
             likeCount={1}
             commentCount={1}
           />

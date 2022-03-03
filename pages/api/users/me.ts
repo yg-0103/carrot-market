@@ -29,4 +29,4 @@ async function handler(
   })
 }
 
-export default withSession(withHandler({ method: 'GET', handler }))
+export default withSession(withHandler({ methods: ['GET'], handler }))

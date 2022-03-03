@@ -5,13 +5,15 @@ export interface ResponseType {
   [key: string]: any
 }
 
+type Method = 'POST' | 'GET' | 'DELETE'
+
 interface ConfigType {
-  method: 'POST' | 'GET' | 'DELETE'
+  methods: Method[]
   handler: (req: NextApiRequest, res: NextApiResponse) => void
   isPrivate?: boolean
 }
 export default function withHandler({
-  method,
+  methods,
   handler,
   isPrivate = true,
 }: ConfigType) {
@@ -20,7 +22,7 @@ export default function withHandler({
       return res.json({ ok: false, error: 'Plz login' })
     }
 
-    if (req.method !== method) {
+    if (req.method && !methods.includes(req.method as Method)) {
       return res.status(405).end()
     }
 
