@@ -6,6 +6,7 @@ interface ProductsResponseType {
   product: {
     user: Pick<User, 'id' | 'avatar' | 'name'>
   } & Product
+  relatedProducts: Product[]
 }
 
 export default function useProduct({ productId }: { productId: number }) {
@@ -13,5 +14,9 @@ export default function useProduct({ productId }: { productId: number }) {
     productId ? `/api/products/${productId}` : null
   )
   console.log(data)
-  return { product: data?.product, isLoading: !data && !error }
+  return {
+    product: data?.product,
+    relatedProducts: data?.relatedProducts,
+    isLoading: !data && !error,
+  }
 }

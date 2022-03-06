@@ -22,9 +22,25 @@ async function handler(
     },
   })
 
+  const searchWords = product?.name.split(' ')
+
+  const relatedProducts = await client.product.findMany({
+    where: {
+      OR: searchWords?.map((word) => ({
+        name: {
+          contains: word,
+        },
+      })),
+      NOT: {
+        id: product?.id,
+      },
+    },
+  })
+
   return res.json({
     ok: true,
     product,
+    relatedProducts,
   })
 }
 

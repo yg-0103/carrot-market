@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 const ProductDetail: NextPage = () => {
   const router = useRouter()
   const productId = Number(router.query.id)
-  const { product } = useProduct({ productId })
+  const { product, relatedProducts } = useProduct({ productId })
 
   if (!product) return null
   return (
@@ -54,14 +54,16 @@ const ProductDetail: NextPage = () => {
         <div className="mt-7">
           <h2 className="text-gray-900 font-bold text-2xl">Similar items</h2>
           <div className="mt-6 grid grid-cols-2 gap-5">
-            {[1, 2, 3, 4, 5, 6].map((_, i) => (
-              <div key={i} className="-mt-2">
-                <div className="h-32 bg-slate-300" />
-                <h3 className="font-medium text-sm mt-3 mb-2 text-gray-600">
-                  Galaxy S60
-                </h3>
-                <p className="text-xs font-medium">$6</p>
-              </div>
+            {relatedProducts?.map((product) => (
+              <Link key={product.id} href={`/products/${product.id}`} passHref>
+                <div className="-mt-2">
+                  <div className="h-32 bg-slate-300" />
+                  <h3 className="font-medium text-sm mt-3 mb-2 text-gray-600">
+                    {product.name}
+                  </h3>
+                  <p className="text-xs font-medium">${product.price}</p>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
