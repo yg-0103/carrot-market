@@ -7,16 +7,21 @@ interface ProductsResponseType {
     user: Pick<User, 'id' | 'avatar' | 'name'>
   } & Product
   relatedProducts: Product[]
+  isLiked: boolean
 }
 
 export default function useProduct({ productId }: { productId: number }) {
-  const { data, error } = useSWR<ProductsResponseType>(
+  const { data, error, mutate } = useSWR<ProductsResponseType>(
     productId ? `/api/products/${productId}` : null
   )
-  console.log(data)
-  return {
-    product: data?.product,
-    relatedProducts: data?.relatedProducts,
-    isLoading: !data && !error,
-  }
+
+  return [
+    {
+      product: data?.product,
+      relatedProducts: data?.relatedProducts,
+      isLiked: data?.isLiked,
+      isLoading: !data && !error,
+    },
+    mutate,
+  ] as const
 }

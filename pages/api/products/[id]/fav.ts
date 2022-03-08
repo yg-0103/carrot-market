@@ -17,7 +17,7 @@ async function handler(
       productId: productId,
     },
   })
-  console.log(favoriteProduct)
+
   // delete도 unique filed 로만 가능, unique filed 가 아닐 경우 deleteMany로 해야함
   if (favoriteProduct) {
     await client.fav.delete({
@@ -42,16 +42,8 @@ async function handler(
     })
   }
 
-  const isLiked = !!(await client.fav.findFirst({
-    where: {
-      productId: productId,
-      userId: userId,
-    },
-  }))
-
   return res.json({
     ok: true,
-    isLiked,
   })
 }
 

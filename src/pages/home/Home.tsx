@@ -11,18 +11,17 @@ const Home: NextPage = () => {
   const { products } = useProducts()
   const router = useRouter()
 
-  console.log(products)
   return (
     <Layout title="홈" hasTapBar>
       <div className="divide-y-2">
-        {products?.map(({ id, name, price, description }) => (
+        {products?.map(({ id, name, price, description, _count: { favs } }) => (
           <ProductItem
             key={id}
             productName={name}
             id={id}
             price={price}
             desc={description}
-            likeCount={1}
+            likeCount={favs}
             commentCount={1}
           />
         ))}

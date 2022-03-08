@@ -17,12 +17,16 @@ interface FavoriteResponseType {
 const ProductDetail: NextPage = () => {
   const router = useRouter()
   const productId = Number(router.query.id)
-  const { product, relatedProducts } = useProduct({ productId })
-  const [toggleFav, { data }] = useMutation<FavoriteResponseType>(
+  const [{ product, relatedProducts, isLiked }, mutate] = useProduct({
+    productId,
+  })
+  const [toggleFav] = useMutation<FavoriteResponseType>(
     `/api/products/${productId}/fav`
   )
 
   const handleToggleFav = () => {
+    if (!product || !relatedProducts) return
+    mutate((prev) => prev && { ...prev, isLiked: !isLiked }, false)
     toggleFav()
   }
 
@@ -49,15 +53,15 @@ const ProductDetail: NextPage = () => {
                 onClick={handleToggleFav}
                 className={cls(
                   'p-3 flex items-center justify-center  rounded-md transition',
-                  data?.isLiked
+                  isLiked
                     ? 'text-red-500 hover:bg-red-200'
                     : 'text-gray-400 hover:bg-slate-200'
                 )}
               >
-                {data?.isLiked ? (
+                {isLiked ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-6"
+                    className="h-6 w-6"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -69,7 +73,7 @@ const ProductDetail: NextPage = () => {
                   </svg>
                 ) : (
                   <svg
-                    className="h-5 w-6 "
+                    className="h-6 w-6 "
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"

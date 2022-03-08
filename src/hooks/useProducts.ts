@@ -3,7 +3,7 @@ import useSWR from 'swr'
 
 interface ProductsResponseType {
   ok: boolean
-  products: Product[]
+  products: ({ _count: { favs: number } } & Product)[]
 }
 
 export default function useProducts() {

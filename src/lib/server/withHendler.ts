@@ -26,6 +26,6 @@ export default function withHandler({
       return res.status(405).end()
     }
 
-    handler(req, res)
+    return handler(req, res)
   }
 }
