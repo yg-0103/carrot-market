@@ -2,14 +2,18 @@ import CommunityItem from '@components/CommunityItem'
 import FloatingButton from '@components/FloatingButton'
 import Layout from '@components/Layout'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
 const CommunityHome: NextPage = () => {
+  const router = useRouter()
+
   return (
     <Layout title="동네생활" hasTapBar>
       <div className="px-4 space-y-6">
         {[1, 2, 3, 4, 5, 7, 8, 9].map((i) => (
           <CommunityItem
             key={i}
+            id={1}
             tags={['동네생활', 'test']}
             commentCount={1}
             likeCount={1}
@@ -19,7 +23,7 @@ const CommunityHome: NextPage = () => {
           />
         ))}
 
-        <FloatingButton onClick={() => {}}>
+        <FloatingButton onClick={() => router.push('/community/write')}>
           <svg
             className="w-6 h-6"
             fill="none"
