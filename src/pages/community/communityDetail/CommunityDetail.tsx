@@ -17,7 +17,6 @@ const CommunityDetail: NextPage = () => {
   const [wonder] = useMutation(`/api/posts/${postId}/wonder`)
 
   const onWonderClick = () => {
-    console.log('hi')
     mutate(
       (prev) =>
         prev && {
