@@ -33,6 +33,7 @@ const CommunityDetail: NextPage = () => {
         },
       false
     )
+    wonder()
   }
 
   if (!post) return null

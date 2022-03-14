@@ -1,25 +1,26 @@
 import CommunityItem from '@components/CommunityItem'
 import FloatingButton from '@components/FloatingButton'
 import Layout from '@components/Layout'
+import usePosts from '@hooks/usePosts'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
 const CommunityHome: NextPage = () => {
   const router = useRouter()
-
+  const { posts } = usePosts()
   return (
     <Layout title="동네생활" hasTapBar>
       <div className="px-4 space-y-6">
-        {[1, 2, 3, 4, 5, 7, 8, 9].map((i) => (
+        {posts?.map((post) => (
           <CommunityItem
-            key={i}
-            id={1}
+            key={post.id}
+            id={post.id}
             tags={['동네생활', 'test']}
-            commentCount={1}
-            likeCount={1}
-            question="What is the best mandu restaurant?"
-            createdAt="18시간 전"
-            writer="니꼬"
+            commentCount={post._count.comments}
+            likeCount={post._count.wonders}
+            question={post.question}
+            createdAt={`${post.createdAt}`}
+            writer={post.user.name}
           />
         ))}
 
