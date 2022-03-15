@@ -3,18 +3,36 @@ import CommentItem from '@components/CommentItem'
 import Layout from '@components/Layout'
 import Profile from '@components/Profile'
 import Tags from '@components/Tags'
+import TextArea from '@components/TextArea'
 import useMutation from '@hooks/useMutation'
 import usePost from '@hooks/usePost'
 import { cls } from '@lib/client/utils'
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+
+interface CommentForm {
+  comment: string
+}
+
+interface CommentResponseType {
+  ok: boolean
+}
 
 const CommunityDetail: NextPage = () => {
   const router = useRouter()
   const postId = Number(router.query.id)
+  const { register, handleSubmit, reset } = useForm<CommentForm>()
   const [{ post, isWondering }, mutate] = usePost({ postId })
-  const [wonder] = useMutation(`/api/posts/${postId}/wonder`)
+
+  const [wonder, { loading: wonderLoading }] = useMutation(
+    `/api/posts/${postId}/wonder`
+  )
+
+  const [comment, { data: commentData, loading: commentLoading }] =
+    useMutation<CommentResponseType>(`/api/posts/${postId}/comment`)
 
   const onWonderClick = () => {
     mutate(
@@ -33,8 +51,21 @@ const CommunityDetail: NextPage = () => {
         },
       false
     )
+    if (wonderLoading) return
     wonder()
   }
+
+  const onValid = (form: CommentForm) => {
+    if (commentLoading) return
+    comment(form)
+  }
+
+  useEffect(() => {
+    if (commentData && commentData.ok) {
+      reset()
+      mutate()
+    }
+  }, [commentData, mutate, reset])
 
   if (!post) return null
 
@@ -109,16 +140,16 @@ const CommunityDetail: NextPage = () => {
             />
           ))}
         </div>
-        <div className="px-4">
-          <textarea
-            className="mt-1 shadow-sm w-full focus:ring-orange-500 rounded-md border-gray-300 focus:border-orange-500 "
-            rows={4}
+        <form className="px-4" onSubmit={handleSubmit(onValid)}>
+          <TextArea
+            label=""
             placeholder="Answer this question!"
+            register={register('comment', { required: true })}
           />
           <div className="mt-5">
-            <Button>Reply</Button>
+            <Button loading={commentLoading}>Reply</Button>
           </div>
-        </div>
+        </form>
       </div>
     </Layout>
   )

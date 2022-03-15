@@ -19,6 +19,7 @@ async function handler(
       comments: {
         select: {
           comment: true,
+          createdAt: true,
           id: true,
           user: {
             select: {
@@ -37,11 +38,12 @@ async function handler(
     },
   })
 
-  const isWondering = await client.wonder.findFirst({
+  const isWondering = !!(await client.wonder.findFirst({
     where: {
       userId: user?.id,
+      postId: postId,
     },
-  })
+  }))
   return res.json({
     ok: true,
     post,

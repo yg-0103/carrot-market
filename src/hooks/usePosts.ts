@@ -11,6 +11,6 @@ interface PostsResponseType {
 
 export default function usePosts() {
   const { data, error } = useSWR<PostsResponseType>('/api/posts')
-  console.log(data)
+
   return { posts: data?.posts, isLoading: !data && !error }
 }
