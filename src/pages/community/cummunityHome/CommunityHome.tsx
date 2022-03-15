@@ -4,6 +4,12 @@ import Layout from '@components/Layout'
 import usePosts from '@hooks/usePosts'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/ko'
+
+dayjs.extend(relativeTime)
+dayjs.locale('ko')
 
 const CommunityHome: NextPage = () => {
   const router = useRouter()
@@ -19,7 +25,7 @@ const CommunityHome: NextPage = () => {
             commentCount={post._count.comments}
             likeCount={post._count.wonders}
             question={post.question}
-            createdAt={`${post.createdAt}`}
+            createdAt={dayjs(post.createdAt).fromNow()}
             writer={post.user.name}
           />
         ))}

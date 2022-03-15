@@ -75,6 +75,8 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
   question String @db.MediumText
+  latitude Float?
+  longitude Float?
   comments Comment[]
   wonders Wonder[]
 }

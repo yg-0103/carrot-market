@@ -12,6 +12,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/ko'
+
+dayjs.extend(relativeTime)
+dayjs.locale('ko')
 
 interface CommentForm {
   comment: string
@@ -134,7 +140,7 @@ const CommunityDetail: NextPage = () => {
           {post.comments.map((comment) => (
             <CommentItem
               key={comment.id}
-              createdAt={`${comment.createdAt}`}
+              createdAt={dayjs(comment.createdAt).fromNow()}
               desc={comment.comment}
               writer={comment.user.name}
             />
