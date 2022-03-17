@@ -11,6 +11,10 @@ export default function useCoods() {
     longitude: null,
   })
 
+  const [isGrantedPermission, setIsGrantedPermission] = useState<
+    boolean | null
+  >(null)
+
   const onSuccess = (position: GeolocationPosition) => {
     setCoords({
       latitude: position.coords.latitude,
@@ -20,7 +24,14 @@ export default function useCoods() {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(onSuccess)
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then((res) =>
+        res.state === 'granted'
+          ? setIsGrantedPermission(true)
+          : setIsGrantedPermission(false)
+      )
   }, [])
 
-  return coords
+  return { ...coords, isGrantedPermission }
 }
