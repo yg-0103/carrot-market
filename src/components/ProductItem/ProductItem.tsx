@@ -4,19 +4,11 @@ interface Props {
   productName: string
   desc: string
   price: number
-  commentCount: number
   likeCount: number
   id: number
 }
 
-const ProductItem = ({
-  productName,
-  commentCount,
-  desc,
-  likeCount,
-  price,
-  id,
-}: Props) => {
+const ProductItem = ({ productName, desc, likeCount, price, id }: Props) => {
   return (
     <Link href={`/products/${id}`} passHref>
       <div className="p-4 flex justify-between cursor-pointer">
@@ -47,23 +39,6 @@ const ProductItem = ({
               ></path>
             </svg>
             <span>{likeCount}</span>
-          </div>
-          <div className="flex text-gray-500 items-center justify-center space-x-0.5">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              ></path>
-            </svg>
-            <span>{commentCount}</span>
           </div>
         </div>
       </div>

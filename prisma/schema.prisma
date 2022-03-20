@@ -155,6 +155,6 @@ model Record {
 
 enum Kind {
   Fav
-  Puchase
+  Purchase
   Sale
 }
