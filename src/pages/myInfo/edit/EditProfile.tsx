@@ -1,11 +1,52 @@
 import Button from '@components/Button'
+import Input from '@components/Input'
 import Layout from '@components/Layout'
+import useUser from '@hooks/useUser'
 import type { NextPage } from 'next'
+import { useEffect, useMemo } from 'react'
+import { useForm } from 'react-hook-form'
+
+interface EditProfileForm {
+  email?: string
+  phone?: bigint
+  errors?: string
+}
 
 const EditProfile: NextPage = () => {
+  const { user } = useUser()
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    setError,
+    clearErrors,
+    watch,
+    formState: { errors },
+  } = useForm<EditProfileForm>()
+
+  const watchingField = watch(user?.email ? 'email' : 'phone')
+
+  const onValid = (form: EditProfileForm) => {
+    console.log(form)
+    if (!form.email && !form.phone) {
+      setError('errors', {
+        message: 'You must choose either an email or a phone.',
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (user?.email) setValue('email', user.email)
+    if (user?.phone) setValue('phone', user.phone)
+  }, [user, setValue])
+
+  useEffect(() => {
+    clearErrors()
+  }, [watchingField, clearErrors])
+
   return (
     <Layout title="프로필 수정" canGoBack>
-      <div className="py-10 px-4 space-y-4">
+      <form onSubmit={handleSubmit(onValid)} className="py-10 px-4 space-y-4">
         <div className="flex items-center space-x-3">
           <div className="w-14 h-14 rounded-full bg-slate-500" />
           <label
@@ -22,34 +63,18 @@ const EditProfile: NextPage = () => {
           </label>
         </div>
         <div className="space-y-1">
-          <label htmlFor="email" className="text-sm font-medium text-gray-700">
-            Email address
-          </label>
-          <input
-            id="email"
-            type="email"
-            className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-            required
-          />
+          <Input label="Email address" register={register('email')} />
         </div>
         <div className="space-y-1">
-          <label htmlFor="phone" className="text-sm font-medium text-gray-700">
-            Phone number
-          </label>
-          <div className="flex rounded-md shadow-sm">
-            <span className="flex items-center justify-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 select-none text-sm">
-              +82
-            </span>
-            <input
-              id="input"
-              type="number"
-              className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md rounded-l-none shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-              required
-            />
-          </div>
+          <Input.Phone label="Phone number" register={register('phone')} />
         </div>
-        <Button onClick={() => {}}>Update profile</Button>
-      </div>
+        {errors.errors && (
+          <span className="mt-1 block text-center font-medium text-red-500">
+            {errors.errors.message}
+          </span>
+        )}
+        <Button>Update profile</Button>
+      </form>
     </Layout>
   )
 }
