@@ -7,18 +7,50 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const profile = await client.user.findUnique({
-    where: {
-      id: req.session.user?.id,
-    },
-  })
+  if (req.method === 'GET') {
+    const profile = await client.user.findUnique({
+      where: {
+        id: req.session.user?.id,
+      },
+    })
 
-  if (!profile) return res.status(404).end()
+    if (!profile) return res.status(404).end()
 
-  return res.json({
-    ok: true,
-    profile,
-  })
+    return res.json({
+      ok: true,
+      profile,
+    })
+  }
+
+  if (req.method === 'POST') {
+    const { email, name, phone } = req.body
+    const userId = req.session.user?.id
+
+    const currentUser = await client.user.findUnique({
+      where: {
+        id: userId,
+      },
+    })
+
+    const alreadyExistEmail = !!(await client.user.findUnique({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+      },
+    }))
+
+    const alreadyExistPhone = !!(await client.user.findUnique({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+      },
+    }))
+    console.log(currentUser)
+  }
 }
 
-export default withSession(withHandler({ methods: ['GET'], handler }))
+export default withSession(withHandler({ methods: ['GET', 'POST'], handler }))

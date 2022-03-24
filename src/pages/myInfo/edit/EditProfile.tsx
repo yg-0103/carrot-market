@@ -1,14 +1,16 @@
 import Button from '@components/Button'
 import Input from '@components/Input'
 import Layout from '@components/Layout'
+import useMutation from '@hooks/useMutation'
 import useUser from '@hooks/useUser'
 import type { NextPage } from 'next'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 interface EditProfileForm {
   email?: string
   phone?: bigint
+  name?: string
   errors?: string
 }
 
@@ -23,21 +25,25 @@ const EditProfile: NextPage = () => {
     watch,
     formState: { errors },
   } = useForm<EditProfileForm>()
+  const [editProfile, { data, loading }] = useMutation('/api/users/me')
 
   const watchingField = watch(user?.email ? 'email' : 'phone')
 
-  const onValid = (form: EditProfileForm) => {
-    console.log(form)
-    if (!form.email && !form.phone) {
+  const onValid = ({ email, phone, name }: EditProfileForm) => {
+    console.log({ email, phone, name })
+    if (!email && !phone) {
       setError('errors', {
         message: 'You must choose either an email or a phone.',
       })
     }
+
+    editProfile({ email, phone, name })
   }
 
   useEffect(() => {
     if (user?.email) setValue('email', user.email)
     if (user?.phone) setValue('phone', user.phone)
+    if (user?.name) setValue('name', user.name)
   }, [user, setValue])
 
   useEffect(() => {
@@ -61,6 +67,9 @@ const EditProfile: NextPage = () => {
               accept="image/*"
             />
           </label>
+        </div>
+        <div className="space-y-1">
+          <Input label="Name" type="text" register={register('name')} />
         </div>
         <div className="space-y-1">
           <Input label="Email address" register={register('email')} />

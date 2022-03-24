@@ -18,6 +18,7 @@ export default function useMutation<T>(url: string) {
     setState({ ...state, loading: true })
 
     try {
+      console.log(args)
       const { data } = await axios.post<T>(url, ...args)
 
       setState({ ...state, loading: false, data })
