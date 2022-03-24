@@ -30,6 +30,7 @@ const EditProfile: NextPage = () => {
   const watchingField = watch(user?.email ? 'email' : 'phone')
 
   const onValid = ({ email, phone, name }: EditProfileForm) => {
+    if (loading) return
     console.log({ email, phone, name })
     if (!email && !phone) {
       setError('errors', {
@@ -71,18 +72,22 @@ const EditProfile: NextPage = () => {
         <div className="space-y-1">
           <Input label="Name" type="text" register={register('name')} />
         </div>
-        <div className="space-y-1">
-          <Input label="Email address" register={register('email')} />
-        </div>
-        <div className="space-y-1">
-          <Input.Phone label="Phone number" register={register('phone')} />
-        </div>
+        {user?.email && (
+          <div className="space-y-1">
+            <Input label="Email address" register={register('email')} />
+          </div>
+        )}
+        {user?.phone && (
+          <div className="space-y-1">
+            <Input.Phone label="Phone number" register={register('phone')} />
+          </div>
+        )}
         {errors.errors && (
           <span className="mt-1 block text-center font-medium text-red-500">
             {errors.errors.message}
           </span>
         )}
-        <Button>Update profile</Button>
+        <Button loading={loading}>Update profile</Button>
       </form>
     </Layout>
   )

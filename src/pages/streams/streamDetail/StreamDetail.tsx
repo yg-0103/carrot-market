@@ -1,7 +1,7 @@
-import Layout from "@components/Layout";
-import type { NextPage } from "next";
+import Layout from '@components/Layout'
+import type { NextPage } from 'next'
 
-const Stream: NextPage = () => {
+const StreamDetail: NextPage = () => {
   return (
     <Layout title="라이브 정보" canGoBack>
       <div className="py-10 px-4  space-y-4">
@@ -124,7 +124,7 @@ const Stream: NextPage = () => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Stream;
+export default StreamDetail

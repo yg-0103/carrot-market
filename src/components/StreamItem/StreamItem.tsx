@@ -2,7 +2,7 @@ interface Props {
   title: string
 }
 
-const LiveItem = ({ title }: Props) => {
+const StreamItem = ({ title }: Props) => {
   return (
     <div className="px-4 py-4">
       <div className="w-full bg-slate-300 aspect-video" />
@@ -11,4 +11,4 @@ const LiveItem = ({ title }: Props) => {
   )
 }
 
-export default LiveItem
+export default StreamItem

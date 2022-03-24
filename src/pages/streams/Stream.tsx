@@ -1,16 +1,22 @@
 import FloatingButton from '@components/FloatingButton'
 import Layout from '@components/Layout'
-import LiveItem from '@components/LiveItem'
+import StreamItem from '@components/StreamItem'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
-const Live: NextPage = () => {
+const Stream: NextPage = () => {
+  const router = useRouter()
   return (
     <Layout title="라이브" hasTapBar>
       <div className="divide-y-2 space-y-3">
         {[1, 2, 3, 4, 5].map((v) => (
-          <LiveItem key={v} title="Let's try potatos" />
+          <StreamItem key={v} title="Let's try potatos" />
         ))}
-        <FloatingButton onClick={() => {}}>
+        <FloatingButton
+          onClick={() => {
+            router.push('/streams/addStream')
+          }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -31,4 +37,4 @@ const Live: NextPage = () => {
   )
 }
 
-export default Live
+export default Stream

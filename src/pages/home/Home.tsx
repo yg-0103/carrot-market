@@ -22,7 +22,6 @@ const Home: NextPage = () => {
             price={price}
             desc={description}
             likeCount={favs}
-            commentCount={1}
           />
         ))}
         <FloatingButton onClick={() => router.push('/products/upload')}>
