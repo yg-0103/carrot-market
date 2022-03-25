@@ -14,6 +14,11 @@ interface EditProfileForm {
   errors?: string
 }
 
+interface EditProfileResponseType {
+  ok: boolean
+  error?: string
+}
+
 const EditProfile: NextPage = () => {
   const { user } = useUser()
   const {
@@ -25,7 +30,8 @@ const EditProfile: NextPage = () => {
     watch,
     formState: { errors },
   } = useForm<EditProfileForm>()
-  const [editProfile, { data, loading }] = useMutation('/api/users/me')
+  const [editProfile, { data, loading }] =
+    useMutation<EditProfileResponseType>('/api/users/me')
 
   const watchingField = watch(user?.email ? 'email' : 'phone')
 
@@ -50,6 +56,12 @@ const EditProfile: NextPage = () => {
   useEffect(() => {
     clearErrors()
   }, [watchingField, clearErrors])
+
+  useEffect(() => {
+    if (data && !data.ok && data.error) {
+      setError('errors', { message: data.error })
+    }
+  }, [data, setError])
 
   return (
     <Layout title="프로필 수정" canGoBack>
