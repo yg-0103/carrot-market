@@ -47,7 +47,10 @@ const AddStream: NextPage = () => {
         <div>
           <Input.Price
             label="Price"
-            register={register('price', { required: true })}
+            register={register('price', {
+              required: true,
+              valueAsNumber: true,
+            })}
           />
         </div>
         <div>
