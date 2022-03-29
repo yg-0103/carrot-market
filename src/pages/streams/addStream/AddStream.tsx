@@ -26,7 +26,11 @@ const AddStream: NextPage = () => {
   const { register, handleSubmit } = useForm<AddStreamForm>()
   const router = useRouter()
 
-  const onValid = (form: AddStreamForm) => {}
+  const onValid = (form: AddStreamForm) => {
+    if (loading) return
+
+    addStream(form)
+  }
 
   useEffect(() => {
     if (data && data.ok) {

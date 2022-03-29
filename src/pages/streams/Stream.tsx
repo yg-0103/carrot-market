@@ -1,16 +1,20 @@
 import FloatingButton from '@components/FloatingButton'
 import Layout from '@components/Layout'
 import StreamItem from '@components/StreamItem'
+import useStreams from '@hooks/useStreams'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
 const Stream: NextPage = () => {
   const router = useRouter()
+  const { streams } = useStreams()
+
+  if (!streams) return null
   return (
     <Layout title="라이브" hasTapBar>
       <div className="divide-y-2 space-y-3">
-        {[1, 2, 3, 4, 5].map((v) => (
-          <StreamItem key={v} title="Let's try potatos" />
+        {streams.map((stream) => (
+          <StreamItem key={stream.id} id={stream.id} title={stream.name} />
         ))}
         <FloatingButton
           onClick={() => {
