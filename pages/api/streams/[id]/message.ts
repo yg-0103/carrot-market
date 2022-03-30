@@ -8,15 +8,20 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const streamId = Number(req.query.id)
+  const payload = req.body.message
+  const userId = req.session.user?.id
 
-  const stream = await client.stream.findUnique({
-    where: { id: streamId },
-    include: {
+  const message = await client.message.create({
+    data: {
+      message: payload,
       user: {
-        select: {
-          id: true,
-          name: true,
-          avatar: true,
+        connect: {
+          id: userId,
+        },
+      },
+      stream: {
+        connect: {
+          id: streamId,
         },
       },
     },
@@ -24,8 +29,8 @@ async function handler(
 
   return res.json({
     ok: true,
-    stream,
+    message,
   })
 }
 
-export default withSession(withHandler({ methods: ['GET'], handler }))
+export default withSession(withHandler({ methods: ['POST'], handler }))
