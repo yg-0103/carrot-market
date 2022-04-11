@@ -36,7 +36,7 @@ model User {
   records Record[]
   writtenReviews Review[] @relation(name: "writtenReview")
   receiveReviews Review[] @relation(name: "receiveReview")
-  stremas Stream[]
+  streams Stream[]
   messages Message[]
 }
 
