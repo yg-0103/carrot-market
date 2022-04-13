@@ -11,7 +11,7 @@ async function main() {
         price: i,
         user: {
           connect: {
-            id: 1,
+            id: 8,
           },
         },
       },
