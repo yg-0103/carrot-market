@@ -13,7 +13,11 @@ async function handler(
   } = req
 
   if (req.method === 'GET') {
-    const streams = await client.stream.findMany()
+    const streams = await client.stream.findMany({
+      // 아래 처럼 하면 페이지네이션 가능
+      // take: 10,
+      // skip: 20
+    })
 
     return res.json({
       ok: true,

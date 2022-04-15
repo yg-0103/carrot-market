@@ -4,7 +4,7 @@ import Layout from '@components/Layout'
 import useMutation from '@hooks/useMutation'
 import useUser from '@hooks/useUser'
 import type { NextPage } from 'next'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 interface EditProfileForm {
@@ -12,6 +12,7 @@ interface EditProfileForm {
   phone?: bigint
   name?: string
   errors?: string
+  avatar?: FileList
 }
 
 interface EditProfileResponseType {
@@ -32,12 +33,15 @@ const EditProfile: NextPage = () => {
   } = useForm<EditProfileForm>()
   const [editProfile, { data, loading }] =
     useMutation<EditProfileResponseType>('/api/users/me')
-
+  const [avatarPreview, setAvatarPreview] = useState('')
   const watchingField = watch(user?.email ? 'email' : 'phone')
+  const avatar = watch('avatar')
 
-  const onValid = ({ email, phone, name }: EditProfileForm) => {
+  const onValid = ({ email, phone, name, avatar }: EditProfileForm) => {
+    console.log(avatar)
+    return
     if (loading) return
-    console.log({ email, phone, name })
+
     if (!email && !phone) {
       setError('errors', {
         message: 'You must choose either an email or a phone.',
@@ -63,17 +67,28 @@ const EditProfile: NextPage = () => {
     }
   }, [data, setError])
 
+  useEffect(() => {
+    if (avatar && avatar.length > 0) {
+      const url = URL.createObjectURL(avatar[0])
+      setAvatarPreview(url)
+    }
+  }, [avatar])
+
   return (
     <Layout title="프로필 수정" canGoBack>
       <form onSubmit={handleSubmit(onValid)} className="py-10 px-4 space-y-4">
         <div className="flex items-center space-x-3">
-          <div className="w-14 h-14 rounded-full bg-slate-500" />
+          <img
+            src={avatarPreview}
+            className="w-14 h-14 rounded-full bg-slate-500"
+          />
           <label
             htmlFor="picture"
             className="cursor-pointer py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 text-gray-700"
           >
             Change
             <input
+              {...register('avatar')}
               id="picture"
               type="file"
               className="hidden"
